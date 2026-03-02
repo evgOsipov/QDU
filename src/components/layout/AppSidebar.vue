@@ -17,23 +17,23 @@
       <!-- Analitika -->
       <v-list-group value="analitika">
         <template #activator="{ props }">
-          <v-list-item v-bind="props" prepend-icon="mdi-chart-areaspline" title="Analitika" />
+          <v-list-item v-bind="props" prepend-icon="mdi-chart-areaspline" :title="t('nav.analitika')" />
         </template>
-        <v-list-item value="asosiy" title="Asosiy" />
-        <v-list-item value="fakultet" title="Fakultet" />
-        <v-list-item value="yonalishlar" title="Yo'nalishlar" />
-        <v-list-item value="guruh" title="Guruh" />
-        <v-list-item value="fanlar" title="Fanlar" />
-        <v-list-item value="foydalanuvchilar" title="Foydalanuvchilar" />
+        <v-list-item value="asosiy" :title="t('nav.asosiy')" />
+        <v-list-item value="fakultet" :title="t('nav.fakultet')" />
+        <v-list-item value="yonalishlar" :title="t('nav.yonalishlar')" />
+        <v-list-item value="guruh" :title="t('nav.guruh')" />
+        <v-list-item value="fanlar" :title="t('nav.fanlar')" />
+        <v-list-item value="foydalanuvchilar" :title="t('nav.foydalanuvchilar')" />
       </v-list-group>
 
       <!-- Rasmlar -->
       <v-list-group value="rasmlar">
         <template #activator="{ props }">
-          <v-list-item v-bind="props" prepend-icon="mdi-image-outline" title="Rasmlar" />
+          <v-list-item v-bind="props" prepend-icon="mdi-image-outline" :title="t('nav.rasmlar')" />
         </template>
-        <v-list-item value="rasm-yuklash" title="Rasm yuklash" />
-        <v-list-item value="rasmlar-royxati" title="Rasmlar ro'yxati" />
+        <v-list-item value="rasm-yuklash" :title="t('nav.rasmYuklash')" />
+        <v-list-item value="rasmlar-royxati" :title="t('nav.rasmlarRoyxati')" />
       </v-list-group>
 
       <!-- Joylashuv -->
@@ -41,7 +41,7 @@
         value="joylashuv"
         prepend-icon="mdi-map-marker-outline"
         append-icon="mdi-chevron-down"
-        title="Joylashuv"
+        :title="t('nav.joylashuv')"
       />
 
       <!-- Imtihonlar -->
@@ -49,22 +49,25 @@
         value="imtihonlar"
         prepend-icon="mdi-clipboard-text-outline"
         append-icon="mdi-chevron-down"
-        title="Imtihonlar"
+        :title="t('nav.imtihonlar')"
       />
 
       <!-- Standalone items -->
-      <v-list-item value="dars-davomati" prepend-icon="mdi-calendar-check-outline" title="Dars davomati" />
-      <v-list-item value="kameralar" prepend-icon="mdi-cctv" title="Kameralar" />
-      <v-list-item value="dars-jadvali" prepend-icon="mdi-calendar-month-outline" title="Dars jadvali" />
-      <v-list-item value="binolar" prepend-icon="mdi-domain" title="Binolar" />
-      <v-list-item value="user-management" prepend-icon="mdi-account-outline" title="User management" />
-      <v-list-item value="roi" prepend-icon="mdi-eye-outline" title="ROI" />
+      <v-list-item value="dars-davomati" prepend-icon="mdi-calendar-check-outline" :title="t('nav.darsDavomati')" />
+      <v-list-item value="kameralar" prepend-icon="mdi-cctv" :title="t('nav.kameralar')" />
+      <v-list-item value="dars-jadvali" prepend-icon="mdi-calendar-month-outline" :title="t('nav.darsJadvali')" />
+      <v-list-item value="binolar" prepend-icon="mdi-domain" :title="t('nav.binolar')" />
+      <v-list-item value="user-management" prepend-icon="mdi-account-outline" :title="t('nav.userManagement')" />
+      <v-list-item value="roi" prepend-icon="mdi-eye-outline" :title="t('nav.roi')" />
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const opened = ref(['analitika', 'rasmlar'])
 const active = ref(['fakultet'])
@@ -89,13 +92,28 @@ const active = ref(['fakultet'])
   padding: 8px;
 }
 
-/* Active item: solid purple background + white text */
+/* Hover для неактивных элементов — светло-серый */
+.v-list-item:not(.v-list-item--active) :deep(.v-list-item__overlay) {
+  background-color: #000000;
+}
+
+.v-list-item:not(.v-list-item--active):hover :deep(.v-list-item__overlay) {
+  opacity: 0.06;
+}
+
+/* :active — светло-фиолетовый через overlay */
+.v-list-item:not(.v-list-item--active):active :deep(.v-list-item__overlay) {
+  background-color: #7f56d9 !important;
+  opacity: 0.15 !important;
+}
+
+/* Активный выбранный элемент: сплошной фиолетовый + белый текст */
 .sidebar-list :deep(.v-list-item--active) {
   background-color: #7f56d9 !important;
 }
 
-.sidebar-list :deep(.v-list-item--active .v-list-item__overlay) {
-  opacity: 0 !important;
+.v-list-item--active :deep(.v-list-item__overlay) {
+  display: none;
 }
 
 .sidebar-list :deep(.v-list-item--active .v-list-item-title),
