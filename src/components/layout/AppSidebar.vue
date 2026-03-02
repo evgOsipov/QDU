@@ -1,5 +1,16 @@
 <template>
-  <v-navigation-drawer permanent rail expand-on-hover width="220" color="white" class="app-sidebar">
+  <v-navigation-drawer
+    v-model="drawerModel"
+    :permanent="!smAndDown"
+    :temporary="smAndDown"
+    :rail="!smAndDown"
+    :expand-on-hover="!smAndDown"
+    width="220"
+    color="white"
+    class="app-sidebar"
+    @mouseenter="!smAndDown && onMouseenter()"
+    @mouseleave="!smAndDown && onMouseleave()"
+  >
     <v-list
       nav
       density="compact"
@@ -58,13 +69,43 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { useDisplay } from 'vuetify'
 import { useI18n } from 'vue-i18n'
 
+const props = defineProps<{ modelValue: boolean }>()
+const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
+
+const { smAndDown } = useDisplay()
 const { t } = useI18n()
 
-const opened = ref(['analitika', 'rasmlar'])
+const drawerModel = computed({
+  get: () => (smAndDown.value ? props.modelValue : true),
+  set: (val: boolean) => emit('update:modelValue', val),
+})
+
+const opened = ref<string[]>(smAndDown.value ? ['analitika', 'rasmlar'] : [])
 const active = ref(['fakultet'])
+
+let savedOpened: string[] = ['analitika', 'rasmlar']
+
+watch(smAndDown, (isMobile) => {
+  if (isMobile) {
+    opened.value = ['analitika', 'rasmlar']
+    savedOpened = ['analitika', 'rasmlar']
+  } else {
+    opened.value = []
+  }
+})
+
+function onMouseenter() {
+  opened.value = [...savedOpened]
+}
+
+function onMouseleave() {
+  savedOpened = [...opened.value]
+  opened.value = []
+}
 </script>
 
 <style scoped>
