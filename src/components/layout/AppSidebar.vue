@@ -1,11 +1,5 @@
 <template>
-  <v-navigation-drawer permanent width="220" color="white" class="app-sidebar">
-    <template #prepend>
-      <div class="sidebar-header">
-        <img src="@/assets/img/logo.png" alt="logo" class="sidebar-logo" />
-      </div>
-    </template>
-
+  <v-navigation-drawer permanent rail expand-on-hover width="220" color="white" class="app-sidebar">
     <v-list
       nav
       density="compact"
@@ -76,16 +70,6 @@ const active = ref(['fakultet'])
 <style scoped>
 .app-sidebar {
   border-right: 1px solid #e5e7eb !important;
-}
-
-.sidebar-header {
-  padding: 20px 16px 16px;
-  border-bottom: 1px solid #f2f4f7;
-}
-
-.sidebar-logo {
-  width: 114px;
-  display: block;
 }
 
 .sidebar-list {
