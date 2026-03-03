@@ -109,6 +109,14 @@ function onMouseleave() {
 <style scoped>
 .app-sidebar {
   border-right: 1px solid #e5e7eb !important;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Плавное появление текста и иконок при раскрытии */
+.app-sidebar :deep(.v-list-item-title),
+.app-sidebar :deep(.v-list-item__append),
+.app-sidebar :deep(.v-list-group__items) {
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .sidebar-list {
