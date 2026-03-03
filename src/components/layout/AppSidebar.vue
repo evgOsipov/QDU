@@ -5,7 +5,7 @@
     :temporary="smAndDown"
     :rail="!smAndDown"
     :expand-on-hover="!smAndDown"
-    width="220"
+    width="320"
     color="white"
     class="app-sidebar"
     @mouseenter="!smAndDown && onMouseenter()"
@@ -15,53 +15,52 @@
       nav
       density="compact"
       v-model:opened="opened"
-      v-model:selected="active"
-      active-color="primary"
+      color="primary"
       class="sidebar-list"
     >
-      <!-- Analitika -->
-      <v-list-group value="analitika">
+      <!-- Analytics -->
+      <v-list-group value="analytics">
         <template #activator="{ props }">
-          <v-list-item v-bind="props" prepend-icon="mdi-chart-areaspline" :title="t('nav.analitika')" />
+          <v-list-item v-bind="props" prepend-icon="mdi-chart-areaspline" :title="t('nav.analytics')" />
         </template>
-        <v-list-item value="asosiy" :title="t('nav.asosiy')" />
-        <v-list-item value="fakultet" :title="t('nav.fakultet')" />
-        <v-list-item value="yonalishlar" :title="t('nav.yonalishlar')" />
-        <v-list-item value="guruh" :title="t('nav.guruh')" />
-        <v-list-item value="fanlar" :title="t('nav.fanlar')" />
-        <v-list-item value="foydalanuvchilar" :title="t('nav.foydalanuvchilar')" />
+        <v-list-item :to="{ name: 'analytics-main' }" :title="t('nav.main')" />
+        <v-list-item :to="{ name: 'analytics-faculty' }" :title="t('nav.faculty')" />
+        <v-list-item :to="{ name: 'analytics-directions' }" :title="t('nav.directions')" />
+        <v-list-item :to="{ name: 'analytics-group' }" :title="t('nav.group')" />
+        <v-list-item :to="{ name: 'analytics-subjects' }" :title="t('nav.subjects')" />
+        <v-list-item :to="{ name: 'analytics-users' }" :title="t('nav.users')" />
       </v-list-group>
 
-      <!-- Rasmlar -->
-      <v-list-group value="rasmlar">
+      <!-- Images -->
+      <v-list-group value="images">
         <template #activator="{ props }">
-          <v-list-item v-bind="props" prepend-icon="mdi-image-outline" :title="t('nav.rasmlar')" />
+          <v-list-item v-bind="props" prepend-icon="mdi-image-outline" :title="t('nav.images')" />
         </template>
-        <v-list-item value="rasm-yuklash" :title="t('nav.rasmYuklash')" />
-        <v-list-item value="rasmlar-royxati" :title="t('nav.rasmlarRoyxati')" />
+        <v-list-item value="image-upload" :title="t('nav.imageUpload')" />
+        <v-list-item value="images-list" :title="t('nav.imagesList')" />
       </v-list-group>
 
-      <!-- Joylashuv -->
+      <!-- Location -->
       <v-list-item
-        value="joylashuv"
+        value="location"
         prepend-icon="mdi-map-marker-outline"
         append-icon="mdi-chevron-down"
-        :title="t('nav.joylashuv')"
+        :title="t('nav.location')"
       />
 
-      <!-- Imtihonlar -->
+      <!-- Exams -->
       <v-list-item
-        value="imtihonlar"
+        value="exams"
         prepend-icon="mdi-clipboard-text-outline"
         append-icon="mdi-chevron-down"
-        :title="t('nav.imtihonlar')"
+        :title="t('nav.exams')"
       />
 
       <!-- Standalone items -->
-      <v-list-item value="dars-davomati" prepend-icon="mdi-calendar-check-outline" :title="t('nav.darsDavomati')" />
-      <v-list-item value="kameralar" prepend-icon="mdi-cctv" :title="t('nav.kameralar')" />
-      <v-list-item value="dars-jadvali" prepend-icon="mdi-calendar-month-outline" :title="t('nav.darsJadvali')" />
-      <v-list-item value="binolar" prepend-icon="mdi-domain" :title="t('nav.binolar')" />
+      <v-list-item value="attendance" prepend-icon="mdi-calendar-check-outline" :title="t('nav.attendance')" />
+      <v-list-item value="cameras" prepend-icon="mdi-cctv" :title="t('nav.cameras')" />
+      <v-list-item value="schedule" prepend-icon="mdi-calendar-month-outline" :title="t('nav.schedule')" />
+      <v-list-item value="buildings" prepend-icon="mdi-domain" :title="t('nav.buildings')" />
       <v-list-item value="user-management" prepend-icon="mdi-account-outline" :title="t('nav.userManagement')" />
       <v-list-item value="roi" prepend-icon="mdi-eye-outline" :title="t('nav.roi')" />
     </v-list>
@@ -84,15 +83,14 @@ const drawerModel = computed({
   set: (val: boolean) => emit('update:modelValue', val),
 })
 
-const opened = ref<string[]>(smAndDown.value ? ['analitika', 'rasmlar'] : [])
-const active = ref(['fakultet'])
+const opened = ref<string[]>(smAndDown.value ? ['analytics', 'images'] : [])
 
-let savedOpened: string[] = ['analitika', 'rasmlar']
+let savedOpened: string[] = ['analytics', 'images']
 
 watch(smAndDown, (isMobile) => {
   if (isMobile) {
-    opened.value = ['analitika', 'rasmlar']
-    savedOpened = ['analitika', 'rasmlar']
+    opened.value = ['analytics', 'images']
+    savedOpened = ['analytics', 'images']
   } else {
     opened.value = []
   }

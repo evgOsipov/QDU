@@ -14,6 +14,39 @@ const routes: RouteRecordRaw[] = [
     name: 'dashboard',
     component: () => import('@/views/DashboardView.vue'),
     meta: { layout: 'default', requiresAuth: true },
+    redirect: { name: 'analytics-main' },
+    children: [
+      {
+        path: 'analytics/main',
+        name: 'analytics-main',
+        component: () => import('@/views/analytics/AnalyticsMainView.vue'),
+      },
+      {
+        path: 'analytics/faculty',
+        name: 'analytics-faculty',
+        component: () => import('@/views/analytics/AnalyticsPlaceholderView.vue'),
+      },
+      {
+        path: 'analytics/directions',
+        name: 'analytics-directions',
+        component: () => import('@/views/analytics/AnalyticsPlaceholderView.vue'),
+      },
+      {
+        path: 'analytics/group',
+        name: 'analytics-group',
+        component: () => import('@/views/analytics/AnalyticsPlaceholderView.vue'),
+      },
+      {
+        path: 'analytics/subjects',
+        name: 'analytics-subjects',
+        component: () => import('@/views/analytics/AnalyticsPlaceholderView.vue'),
+      },
+      {
+        path: 'analytics/users',
+        name: 'analytics-users',
+        component: () => import('@/views/analytics/AnalyticsPlaceholderView.vue'),
+      },
+    ],
   },
 ]
 
