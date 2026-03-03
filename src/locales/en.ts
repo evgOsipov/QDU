@@ -10,6 +10,7 @@ export default {
       submit: 'Sign in',
       invalidCredentials: 'Invalid login or password',
     },
+    logout: 'Log out',
   },
   validation: {
     required: 'This field is required',

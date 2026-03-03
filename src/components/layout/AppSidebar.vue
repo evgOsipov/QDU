@@ -68,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useDisplay } from 'vuetify'
 import { useI18n } from 'vue-i18n'
 
@@ -85,13 +85,22 @@ const drawerModel = computed({
 
 const opened = ref<string[]>(smAndDown.value ? ['analytics', 'images'] : [])
 
-let savedOpened: string[] = ['analytics', 'images']
+let savedOpened: string[] = []
 
 watch(smAndDown, (isMobile) => {
   if (isMobile) {
     opened.value = ['analytics', 'images']
     savedOpened = ['analytics', 'images']
   } else {
+    opened.value = []
+    savedOpened = []
+  }
+})
+
+// Vuetify auto-opens the group containing the active route — reset it on desktop
+onMounted(async () => {
+  if (!smAndDown.value) {
+    await nextTick()
     opened.value = []
   }
 })
@@ -109,7 +118,9 @@ function onMouseleave() {
 <style scoped>
 .app-sidebar {
   border-right: 1px solid #e5e7eb !important;
-  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition:
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 /* Плавное появление текста и иконок при раскрытии */
@@ -117,6 +128,11 @@ function onMouseleave() {
 .app-sidebar :deep(.v-list-item__append),
 .app-sidebar :deep(.v-list-group__items) {
   transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Плавное затемнение фона при открытии мобильного меню */
+.app-sidebar :deep(.v-navigation-drawer__scrim) {
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .sidebar-list {

@@ -10,6 +10,7 @@ export default {
       submit: 'Войти',
       invalidCredentials: 'Неверный логин или пароль',
     },
+    logout: 'Выйти',
   },
   validation: {
     required: 'Поле обязательно для заполнения',

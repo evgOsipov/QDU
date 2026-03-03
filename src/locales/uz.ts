@@ -10,6 +10,7 @@ export default {
       submit: 'Kirish',
       invalidCredentials: "Login yoki parol noto'g'ri",
     },
+    logout: 'Chiqish',
   },
   validation: {
     required: "Maydon to'ldirilishi shart",
